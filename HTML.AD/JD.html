@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galeria zdjęć</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            margin: 0;
+        }
+        .header {
+            width: 100%;
+            padding: 20px;
+            background-color: #333;
+            color: white;
+            text-align: center;
+        }
+        .header a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.2em;
+            margin: 0 10px;
+        }
+        .gallery-container {
+            position: relative;
+            width: 80%;
+            max-width: 600px;
+            margin-top: 20px;
+        }
+        .gallery-slide {
+            display: none;
+            width: 100%;
+        }
+        .gallery-slide img {
+            width: 100%;
+            border-radius: 10px;
+        }
+        .prev, .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            padding: 16px;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            transition: 0.6s ease;
+            user-select: none;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+        }
+        .prev {
+            left: 10px;
+        }
+        .next {
+            right: 10px;
+        }
+        .prev:hover, .next:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+        .footer {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .footer a {
+            text-decoration: none;
+            color: #333;
+            font-size: 1.2em;
+            border: 2px solid #333;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+        .footer a:hover {
+            background-color: #333;
+            color: white;
+        }
+    </style>
+
+<body>
+
+<div class="header">
+    <a href="index.html">Strona główna</a>
+</div>
+
+<div class="gallery-container">
+    <div class="gallery-slide">
+        <img src="muzeaimg/muz1.jpeg" alt="Zdjęcie 1">
+    </div>
+    <div class="gallery-slide">
+        <img src="muzeaimg/muz4.jpg" alt="Zdjęcie 2">
+    </div>
+    <div class="gallery-slide">
+        <img src="muzeaimg/muz2.webp" alt="Zdjęcie 3">
+    </div>
+    <div class="gallery-slide">
+        <img src="muzeaimg/muz3.jpeg" alt="Zdjęcie 4">
+    </div>
+    <div class="gallery-slide">
+        <img src="muzeaimg/muz1.jpeg" alt="Zdjęcie 5">
+    </div>
+
+    <a class="prev" onclick="changeSlide(-1)">&#10094;</a>
+    <a class="next" onclick="changeSlide(1)">&#10095;</a>
+</div>
+
+<div class="footer">
+    <a href="index.html">Powrót do strony głównej</a>
+</div>
+
+<script>
+    let currentSlide = 0;
+    showSlide(currentSlide);
+
+    function showSlide(n) {
+        let slides = document.getElementsByClassName("gallery-slide");
+        if (n >= slides.length) { currentSlide = 0; }
+        if (n < 0) { currentSlide = slides.length - 1; }
+        for (let i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        slides[currentSlide].style.display = "block";
+    }
+
+    function changeSlide(n) {
+        showSlide(currentSlide += n);
+    }
+</script>
+
+</body>
+</html>

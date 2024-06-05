@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rysowanie na Canvas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .header {
+            width: 100%;
+            padding: 20px;
+            background-color: #333;
+            color: white;
+            text-align: center;
+        }
+        .header a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.2em;
+            margin: 0 10px;
+        }
+        .controls {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .controls button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #333;
+            color: white;
+            font-size: 1em;
+            cursor: pointer;
+            margin: 0 10px;
+        }
+        .controls button:hover {
+            background-color: #555;
+        }
+        canvas {
+            border: 1px solid #333;
+            margin-top: 20px;
+            border-radius: 10px;
+        }
+        .footer {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .footer a {
+            text-decoration: none;
+            color: #333;
+            font-size: 1.2em;
+            border: 2px solid #333;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+        .footer a:hover {
+            background-color: #333;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <a href="index.html">Strona główna</a>
+</div>
+
+<div class="controls">
+    <button onclick="setDrawingMode('line')">Rysuj Linie</button>
+    <button onclick="setDrawingMode('circle')">Rysuj Okręgi</button>
+</div>
+
+<canvas id="canvas" width="800" height="600"></canvas>
+
+<div class="footer">
+    <a href="index.html">Powrót do strony głównej</a>
+</div>
+
+<script>
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    let drawingMode = 'line';
+    let isDrawing = false;
+    let startX = 0;
+    let startY = 0;
+
+    canvas.addEventListener('mousedown', (e) => {
+        isDrawing = true;
+        startX = e.offsetX;
+        startY = e.offsetY;
+    });
+
+    canvas.addEventListener('mouseup', (e) => {
+        if (!isDrawing) return;
+        isDrawing = false;
+        const endX = e.offsetX;
+        const endY = e.offsetY;
+        
+        if (drawingMode === 'line') {
+            drawLine(startX, startY, endX, endY);
+        } else if (drawingMode === 'circle') {
+            const radius = Math.sqrt(Math.pow(endX - startX, 2) + Math.pow(endY - startY, 2));
+            drawCircle(startX, startY, radius);
+        }
+    });
+
+    function setDrawingMode(mode) {
+        drawingMode = mode;
+    }
+
+    function drawLine(x1, y1, x2, y2) {
+        ctx.beginPath();
+        ctx.moveTo(x1, y1);
+        ctx.lineTo(x2, y2);
+        ctx.stroke();
+    }
+
+    function drawCircle(x, y, radius) {
+        ctx.beginPath();
+        ctx.arc(x, y, radius, 0, Math.PI * 2);
+        ctx.stroke();
+    }
+</script>
+
+</body>
+</html>
